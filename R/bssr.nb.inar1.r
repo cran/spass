@@ -2,12 +2,12 @@
 #' @description \code{bssr.nb.inar1} fits blinded observations and recalculates the sample size required for proving a desired alternative when testing for
 #' a rate ratio between two groups unequal to one. See 'Details' for more information.
 #'
-#' @param alpha  level (type I error) to which the hypothesis is tested.
+#' @param alpha level (type I error) to which the hypothesis is tested.
 #' @param power  power (1 - type II error) to which an alternative should be proven.
-#' @param delta  the rate ratio which is to be proven.
-#' @param x      a matrix or data frame containing count data which is to be fitted. Columns correspond to time points, rows to observations.
-#' @param n      a vector giving the sample size within the control group and the treatment group, respecitvely.
-#' @param k      planned sample size allocation factor between groups: see 'Details'.
+#' @param delta the rate ratio which is to be proven.
+#' @param x a matrix or data frame containing count data which is to be fitted. Columns correspond to time points, rows to observations.
+#' @param n a vector giving the sample size within the control group and the treatment group, respecitvely.
+#' @param k planned sample size allocation factor between groups: see 'Details'.
 #'
 #' @details
 #' When testing for differences between rates \eqn{\mu_C} and \eqn{\mu_T} of two groups, a control and a treatment group respectively, we usually

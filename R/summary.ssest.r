@@ -1,8 +1,9 @@
 #' @title  Summarizing Initial Sample Size Estimates
 #' @description \code{summary} method for class "\code{ssest}".
 #'
-#' @param object  an object of class "\code{ssest}".
-#' @param ... Arguments to be passed to methods.
+#' @param object an object of class "\code{ssest}".
+#' @param ... Arguments to be passed to or from other methods.
+#'
 #' @details
 #' \code{summary.ssest} gives back initial sample size estimates required. Furthermore, inputs are displayed for double checking.
 #'
@@ -49,7 +50,37 @@ summary.ssest<-function(object, ...){
     cat("\n")
     cat(paste("treatment group:"), round(object$n[2],2))
   }
-  
+
+  if(object$model=="GF"){
+    cat("Initial Sample Size Calculation")
+    cat("\n")
+    cat("---------------------------------")
+    cat("\n")
+    cat(paste("alpha level:          ", object$alpha))
+    cat("\n")
+    cat(paste("testing power:        ", round(object$power,2)))
+    cat("\n")
+    cat(paste("trend type:           ", object$trend))
+    cat("\n")
+    cat(paste(c("trend parameters:     ", object$lambda)))
+    cat("\n")
+    cat(paste("dispersion parameter: ", object$size))
+    cat("\n")
+    cat(paste("correlation parameter:", object$rho))
+    cat("\n")
+    cat(paste("time points:          ", object$tp))
+    cat("\n")
+    cat(paste("allocation factor:    ", object$k))
+    cat("\n\n")
+    cat("Sample Size")
+    cat("\n")
+    cat("---------------------------------")
+    cat("\n")
+    cat(paste("control group:  ", round(object$n[1],2)))
+    cat("\n")
+    cat(paste("treatment group:"), round(object$n[2],2))
+  }
+
   if(object$model=="normal1subgroup"){
     cat("Initial Sample Size Calculation")
     cat("\n")
@@ -76,38 +107,6 @@ summary.ssest<-function(object, ...){
     cat(paste("approximation method:   ", object$approx))
     cat("\n")
     cat(paste("allocation factor:      ", object$k))
-    cat("\n\n")
-    cat("Sample Size")
-    cat("\n")
-    cat("---------------------------------------------")
-    cat("\n")
-    cat(paste("control group:  ", round(object$n[1],2)))
-    cat("\n")
-    cat(paste("treatment group:"), round(object$n[2],2))
-  }
-  
-  if(object$model=="normal.gee.1subgroup"){
-    cat("Initial Sample Size Calculation")
-    cat("\n")
-    cat("Model: One Subgroup within a Full Population")
-    cat("\n")
-    cat("---------------------------------------------")
-    cat("\n")
-    cat(paste("alpha level:            ", object$alpha))
-    cat("\n")
-    cat(paste("1-(testing power):      ", object$beta))
-    cat("\n")
-    cat(paste("prevalence of subgroup: ", object$tau))
-    cat("\n")
-    cat(paste("effect in subgroup:     ", object$delta[2]))
-    cat("\n")
-    cat(paste("effect allcomers:       ", object$delta[1]))
-    cat("\n")
-    cat(paste("outcomevar in subgroup: ", object$sigma[2]))
-    cat("\n")
-    cat(paste("outcomevar allcomers:   ", object$sigma[1]))
-    cat("\n")
-    cat(paste("allocation factor k:     ", object$k))
     cat("\n\n")
     cat("Sample Size")
     cat("\n")

@@ -1,11 +1,11 @@
 #' @title Fitting Longitudinal Data with Negative Binomial Marginal Distribution and Autoregressive Correlation Structure of Order One: NB-INAR(1)
 #' @description \code{fit.nb.inar1} fits data using the maximum likelihood of a reparametrized NB-INAR(1) model.
 #'
-#' @param x       a matrix or data frame containing count data which is to be fitted. Columns correspond to time points, rows to observations.
-#' @param lower   vector of lower bounds for estimated parameters \code{mu}, \code{size} and \code{rho}, respectively.
-#' @param upper   vector of upper bounds for estimated parameters \code{mu}, \code{size} and \code{rho}, respectively.
-#' @param method  algorithm used for minimization of the likelihood, see \code{\link{optim}} for details.
-#' @param start   vector of starting values for estimated parameters \code{mu}, \code{size} and \code{rho}, respectively, used for optimization.
+#' @param x a matrix or data frame containing count data which is to be fitted. Columns correspond to time points, rows to observations.
+#' @param lower vector of lower bounds for estimated parameters \code{mu}, \code{size} and \code{rho}, respectively.
+#' @param upper vector of upper bounds for estimated parameters \code{mu}, \code{size} and \code{rho}, respectively.
+#' @param method algorithm used for minimization of the likelihood, see \code{\link{optim}} for details.
+#' @param start vector of starting values for estimated parameters \code{mu}, \code{size} and \code{rho}, respectively, used for optimization.
 #'
 #' @details the function \code{fit.nb.inar1} fits a reparametrization of the NB-INAR(1) model as found in McKenzie (1986). The reparametrized model
 #' assumes equal means and dispersion parameter between time points with an autoregressive correlation structure. The function is especially useful

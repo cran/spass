@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{an object of class "\code{ssest}".}
 
-\item{...}{Arguments to be passed to methods.}
+\item{...}{Arguments to be passed to or from other methods.}
 }
 \description{
 \code{summary} method for class "\code{ssest}".
@@ -29,4 +29,3 @@ summary(estimate)
 \seealso{
 \code{\link{n.nb.inar1}} for initial sample size estimates within the NB-INAR(1) model.
 }
-

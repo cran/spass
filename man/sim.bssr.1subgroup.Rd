@@ -49,8 +49,8 @@ sim.bssr.1subgroup(nsim = 1000, alpha, beta, delta, sigma, tau, vdelta,
 \code{sim.bssr.1subgroup} returns a data.frame containing the mean recalculated sample size within the control group and treatment group and the achieved simulated power along with all relevant parameters.
 }
 \description{
-Given estimates of the treatment effects to be proven, the variances, and the prevalence, 
-\code{sim.bssr.1subgroup} calculates a initial sample size and performes a blinded sample size recalculation 
+Given estimates of the treatment effects to be proven, the variances, and the prevalence,
+\code{sim.bssr.1subgroup} calculates a initial sample size and performes a blinded sample size recalculation
 after a prespecified number of subjects have been enrolled. Each oberservation is simulated and a final analysis executed.
 Several variations are included, such as different approximations or sample size allocation.
 }
@@ -68,10 +68,10 @@ Note that this leads to better performance when dealing with extremely small sub
 }
 \examples{
 sim.bssr.1subgroup(nsim=10,alpha=0.025,beta=0.1,delta=c(0,1),sigma=c(1,1.3),tau=0.2,
-vdelta=c(0,1),vsigma=c(1,1),vtau=0.3,eps=0.002, approx="conservative.t",df="n", 
+vdelta=c(0,1),vsigma=c(1,1),vtau=0.3,eps=0.002, approx="conservative.t",df="n",
 fix.tau="YES",k=1,adjust="NO")
+
 }
 \seealso{
 \code{sim.bssr.1subgroup} makes use of \code{\link{n.1subgroup}}, \code{\link{bssr.1subgroup}}, and \code{\link{r.1subgroup}}.
 }
-

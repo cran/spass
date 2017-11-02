@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim.bssr.gee.1subgroup.r
 \name{sim.bssr.gee.1subgroup}
 \alias{sim.bssr.gee.1subgroup}
-\title{Simulation of a longitudinal One Subgroup Design with Internal Pilot Study}
+\title{Simulation of a longitudinal one subgroup design with internal pilot Study}
 \source{
 \code{sim.bssr.gee.1subgroup} uses code contributed by Roland Gerard Gera.
 }
@@ -24,23 +24,23 @@ sim.bssr.gee.1subgroup(nsim = 1000, alpha = 0.05, tail = "both",
 
 \item{beta}{type II error (power=1-beta) to which an alternative should be proven.}
 
-\item{delta}{vector of true treatment effects, c(allcomers, inside subgroup).}
+\item{delta}{vector of true treatment effects, c(overall population, inside subgroup).}
 
-\item{vdelta}{vector of treatment effects to be proven, c(allcomers, inside subgroup).}
+\item{vdelta}{vector of treatment effects to be proven, c(overall population, inside subgroup).}
 
-\item{sigma_pop}{vector of true standard deviations, c(allcomers, inside subgroup).}
+\item{sigma_pop}{vector of true standard deviations of the treatment effects, c(overall population, subgroup).}
 
-\item{vsigma_pop}{vector of assumed standard deviations, c(allcomers, inside subgroup).}
+\item{vsigma_pop}{vector of assumed standard deviations, c(overall population, inside subgroup).}
 
 \item{tau}{subgroup prevalence.}
 
-\item{rho}{true correlation coefficent between two adjasent timepints}
+\item{rho}{true correlation coefficient between two adjacent timepoints}
 
-\item{vrho}{initial expectation of the correlation coefficent between two adjasent timepints}
+\item{vrho}{initial expectation of the correlation coefficient between two adjacent timepoints}
 
-\item{theta}{true correlation absorption coefficient if tinepoints are farther appart}
+\item{theta}{true correlation absorption coefficient if timepoints are farther apart}
 
-\item{vtheta}{expected correlation absorption coefficient if tinepoints are farther appart}
+\item{vtheta}{expected correlation absorption coefficient if timepoints are farther apart}
 
 \item{Time}{vector of measured timepoints}
 
@@ -50,9 +50,9 @@ sim.bssr.gee.1subgroup(nsim = 1000, alpha = 0.05, tail = "both",
 
 \item{model}{which of the two often revered statistical models should be used?: see 'Details'.}
 
-\item{V}{working covariance matrix. Easiest case ist the identity matrix.}
+\item{V}{working covariance matrix.}
 
-\item{OD}{overall dropout measuered at last timepoint}
+\item{OD}{overall dropout measured at last timepoint}
 
 \item{vdropout}{vector of expected dropouts per timepoint if missingness is to be expected}
 
@@ -60,19 +60,19 @@ sim.bssr.gee.1subgroup(nsim = 1000, alpha = 0.05, tail = "both",
 
 \item{vmissingtype}{initial assumptions about the missingtype underlying the missingness}
 
-\item{seed}{set seed value for the simulations to compare resutlts.}
+\item{seed}{set seed value for the simulations to compare results.}
 }
 \value{
 \code{sim.bssr.1subgroup} returns a data.frame containing the mean and variance of recalculated sample sizes within the control group and treatment group respectively and the achieved simulated power along with all relevant parameters.
 }
 \description{
-Given estimates of the treatment effects to be proven, the variances, and the prevalence, 
-\code{sim.bssr.gee.1subgroup} calculates an initial sample size and performes a blinded sample size recalculation 
-after a prespecified number of subjects have been enrolled. Each oberservation is simulated and a final analysis executed.
+Given estimates of the treatment effects to be proven, the variances, and the prevalence,
+\code{sim.bssr.gee.1subgroup} calculates an initial sample size and performs a blinded sample size recalculation
+after a pre-specified number of subjects have been enrolled. Each observation is simulated and a final analysis executed.
 Several variations are included, such as different approximations or sample size allocation.
 }
 \details{
-This function combines sample size estimation, blinded sample size reestimation and analysis in a design with a subgroup within a full population where we want to test for treatment effects between a control and a treatment group.
+This function combines sample size estimation, blinded sample size re-estimation and analysis in a design with a subgroup within a full population where we want to test for treatment effects between a control and a treatment group.
 The required sample size for the control and treatment group to prove an existing
 alternative \code{delta} with a specified power 1-\code{beta} when testing the global null hypothesis \eqn{H_0: \Delta_F=\Delta_S=0} to level \code{alpha} is calculated prior to the study and then recalculated in an internal pilot study.
 
@@ -81,8 +81,8 @@ sample size allocation factor, i.e. \eqn{k = n_T/n_C}.
 }
 \examples{
 sim.bssr.gee.1subgroup(nsim = 5,missingtype = "intermittened")
+
 }
 \seealso{
 \code{sim.bssr.gee.1subgroup} makes use of \code{\link{n.gee.1subgroup}}, \code{\link{bssr.gee.1subgroup}}, and \code{\link{r.gee.1subgroup}}.
 }
-

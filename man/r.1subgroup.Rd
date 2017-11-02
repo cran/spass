@@ -55,4 +55,3 @@ set.seed(142)
 random<-r.1subgroup(n=50, delta=c(0,1), sigma=c(1,1), tau=0.4, fix.tau="YES", k=2)
 random 
 }
-

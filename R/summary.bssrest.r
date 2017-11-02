@@ -1,8 +1,9 @@
 #' @title  Summarizing Blinded Sample Size Reestimation
 #' @description \code{summary} method for class "\code{bssrest}".
 #'
-#' @param object  an object of class "\code{bssrest}".
-#' @param ... Arguments to be passed to methods.
+#' @param object an object of class "\code{bssrest}".
+#' @param ... Arguments to be passed to or from other methods.
+#'
 #' @details
 #' \code{summary.bssrest} gives back blinded sample size estimates. Furthermore, inputs are displayed for double checking.
 #'
@@ -22,8 +23,8 @@
 #' treatment<-rnbinom.inar1(n=50, size=1, mu=1.6, rho=0.5, tp=7)
 #'
 #' #Blinded sample size reestimation
-#' estimate<-bssr.nb.inar1(alpha=0.025, power=0.8, delta=0.8, x=rbind(placebo, treatment), 
-#' n=c(50,50), k=1)
+#' estimate<-bssr.nb.inar1(alpha=0.025, power=0.8, delta=0.8, x=rbind(placebo, treatment),
+#'   n=c(50,50), k=1)
 #' summary(estimate)
 #' @export
 
@@ -58,6 +59,39 @@ summary.bssrest<-function(object, ...){
     cat("\n")
     cat(paste("treatment group:"), round(object$n[2],2))
   }
+
+  if(object$model=="GF"){
+    cat("Blinded Sample Size Reestimation")
+    cat("\n")
+    cat("---------------------------------")
+    cat("\n")
+    cat(paste("alpha level:               ", object$alpha))
+    cat("\n")
+    cat(paste("testing power:             ", round(object$power,2)))
+    cat("\n")
+    cat(paste("trend type:                ", object$trend))
+    cat("\n")
+    cat(paste("effect size:               ", object$delta))
+    cat("\n")
+    cat(paste(c("est. trend parameters:     ", round(object$lambda,2))))
+    cat("\n")
+    cat(paste("est. dispersion parameter: ", round(object$size,2)))
+    cat("\n")
+    cat(paste("est. correlation parameter:", round(object$rho,2)))
+    cat("\n")
+    cat(paste("time points:               ", object$tp))
+    cat("\n")
+    cat(paste("allocation factor:         ", object$k))
+    cat("\n\n")
+    cat("Sample Size")
+    cat("\n")
+    cat("---------------------------------")
+    cat("\n")
+    cat(paste("control group:  ", round(object$n[1],2)))
+    cat("\n")
+    cat(paste("treatment group:"), round(object$n[2],2))
+  }
+
   if(object$model=="normal1subgroup"){
     cat("Blinded Sample Size Reestimation")
     cat("\n")
@@ -88,37 +122,6 @@ summary.bssrest<-function(object, ...){
     cat("Reestimated Sample Size")
     cat("\n")
     cat("-----------------------------------------------")
-    cat("\n")
-    cat(paste("control group:  ", round(object$n[1],2)))
-    cat("\n")
-    cat(paste("treatment group:"), round(object$n[2],2))
-  }
-  if(object$model=="normal.gee.1subgroup"){
-    cat("Initial Sample Size Calculation")
-    cat("\n")
-    cat("Model: One Subgroup within a Full Population")
-    cat("\n")
-    cat("---------------------------------------------")
-    cat("\n")
-    cat(paste("alpha level:            ", object$alpha))
-    cat("\n")
-    cat(paste("1-(testing power):      ", object$beta))
-    cat("\n")
-    cat(paste("prevalence of subgroup: ", object$tau))
-    cat("\n")
-    cat(paste("effect in subgroup:     ", object$delta[2]))
-    cat("\n")
-    cat(paste("effect allcomers:       ", object$delta[1]))
-    cat("\n")
-    cat(paste("outcomevar in subgroup: ", object$sigma[2]))
-    cat("\n")
-    cat(paste("outcomevar allcomers:   ", object$sigma[1]))
-    cat("\n")
-    cat(paste("allocation factor k:      ", object$k))
-    cat("\n\n")
-    cat("Sample Size")
-    cat("\n")
-    cat("---------------------------------------------")
     cat("\n")
     cat(paste("control group:  ", round(object$n[1],2)))
     cat("\n")

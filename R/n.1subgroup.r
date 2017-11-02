@@ -31,51 +31,53 @@
 #' @examples
 #' #Calculate required sample size to correctly reject with
 #' #80% probability when testing the global Nullhypothesis H_0: Delta_F=Delta_S = 0
-#' #assuming the true effect Delta_S=1 is in the subgroup (no effect outside of the subgroup) 
+#' #assuming the true effect Delta_S=1 is in the subgroup (no effect outside of the subgroup)
 #' #with subgroup prevalence tau=0.4.
 #' #The variances in and outside of the subgroup are unequal, sigma=c(1,1.2).
 #'
-#' estimate<-n.1subgroup(alpha=0.025,beta=0.1,delta=c(0,1),sigma=c(1,1.2),tau=0.4,eps=0.0001, 
+#' estimate<-n.1subgroup(alpha=0.025,beta=0.1,delta=c(0,1),sigma=c(1,1.2),tau=0.4,eps=0.0001,
 #' approx="conservative.t",k=2)
 #' summary(estimate)
+#' @import mvtnorm
+#' @import multcomp
 #' @export
 
 n.1subgroup<-function(alpha,beta,delta,sigma,tau,eps=0.001, approx=c("conservative.t","liberal.t","normal"),k=1, nmax=1000, nmin=0){ #delta<-c(deltaF\S,deltaS); sigma<-c(sigmaF\S,sigmaS)
-  
+
   ##------------------------------------------------------------------------------------##
   ##------recursive search algorithm for determining optimal sample size----------------##
   find<-function(n,alpha,beta,eps,alloc, sigma, delta, tau, approx=c("conservative.t","liberal.t","normal")){
     a<-alloc
-    
+
     astar<-1+1/a
-    
+
     n_P<-floor((n[2]+n[1])/2)+1
     ns_P<-floor(tau*n_P)
-    
-    S<-cov2cor(matrix(c(1+1/4*delta[1]^2/sigma[1]^2,sqrt(tau)*sigma[2]/sigma[1]*(1+delta[1]*delta[2]/sigma[1]^2/8),sqrt(tau)*sigma[2]/sigma[1]*(1+delta[1]*delta[2]/sigma[1]^2/8),1+1/4*delta[2]^2/sigma[2]^2),byrow=TRUE,ncol=2))   
-    
+
+    S<-cov2cor(matrix(c(1+1/4*delta[1]^2/sigma[1]^2,sqrt(tau)*sigma[2]/sigma[1]*(1+delta[1]*delta[2]/sigma[1]^2/8),sqrt(tau)*sigma[2]/sigma[1]*(1+delta[1]*delta[2]/sigma[1]^2/8),1+1/4*delta[2]^2/sigma[2]^2),byrow=TRUE,ncol=2))
+
     Z<-c(deltaFiP/sigma[1],delta[2]/sigma[2])
-    
+
     if(approx=="conservative.t"){
-      
+
       z<-qmvt(1-alpha, delta=c(0,0), df=(a+1)*ns_P-2, corr=S, tail="lower")$quantile
       pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=(a+1)*ns_P-2, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
-      
+
     }
     if(approx=="liberal.t"){
-      
+
       z<-qmvt(1-alpha, delta=c(0,0), df=(a+1)*n_P-4, corr=S, tail="lower")$quantile
       pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=(a+1)*n_P-4, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
-      
+
     }
     if(approx=="normal"){
-      
+
       z<-qmvnorm(1-alpha, mean=c(0,0), corr=S, tail="lower")$quantile
       pow<-1-pmvnorm(sqrt(c(n_P/astar,tau*n_P/astar))*Z, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
-      
+
     }
     if(n_P!=n[2] && ((a+1)*tau*(floor((n[1]+n_P)/2)+1)-2)>1 ){
-      
+
       if(pow<(1-beta-eps)){
         n_P<-find(n=c(n_P,n[2]),alpha,beta,eps,alloc, sigma, delta, tau, approx)
       }
@@ -87,23 +89,21 @@ n.1subgroup<-function(alpha,beta,delta,sigma,tau,eps=0.001, approx=c("conservati
   }
   ##------------------------------------------------------------------------------------##
   ##------------------------------------------------------------------------------------##
-  
-  approx<-match.arg(approx) 
-  #multcomp <- require(multcomp, quietly = TRUE)
-  #mvtnorm <- require(mvtnorm, quietly = TRUE)
+
+  approx<-match.arg(approx)
   deltaFiP<-(1-tau)*delta[1]+tau*delta[2]
   sigmaFiP<-sqrt((1-tau)*(sigma[1]^2)+tau*(sigma[2]^2))
   deltaS<-delta[2];sigmaS<-sigma[2]
-  
+
   n_P<-find(n=c(0,nmax),alpha=alpha,beta=beta,eps=eps,alloc=k,sigma=c(sigmaFiP,sigmaS),delta=c(deltaFiP,deltaS),tau=tau,approx=approx)
-  
+
   a<-k
   astar<-1+1/a
   n<-ceiling(c(n_P,a*n_P))
 
   if (sum(n)>nmax){
     Z<-c(deltaFiP/sigmaFiP,deltaS/sigmaS)
-    S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigmaFiP^2,sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),1+1/4*deltaS^2/sigmaS^2),byrow=TRUE,ncol=2))    
+    S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigmaFiP^2,sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),1+1/4*deltaS^2/sigmaS^2),byrow=TRUE,ncol=2))
     n_P<-floor(nmax/(a+1))
     ns_P<-floor(tau*n_P)
     if(approx=="conservative.t"){
@@ -124,7 +124,7 @@ n.1subgroup<-function(alpha,beta,delta,sigma,tau,eps=0.001, approx=c("conservati
   }
   if (sum(n)<nmin){
     Z<-c(deltaFiP/sigmaFiP,deltaS/sigmaS)
-    S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigmaFiP^2,sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),1+1/4*deltaS^2/sigmaS^2),byrow=TRUE,ncol=2))    
+    S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigmaFiP^2,sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),sqrt(tau)*sigmaS/sigmaFiP*(1+deltaFiP*deltaS/sigmaFiP^2/8),1+1/4*deltaS^2/sigmaS^2),byrow=TRUE,ncol=2))
     n_P<-floor(nmin/(a+1))
     ns_P<-floor(tau*n_P)
     if(approx=="conservative.t"){

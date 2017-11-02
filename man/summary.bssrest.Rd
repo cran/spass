@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{an object of class "\code{bssrest}".}
 
-\item{...}{Arguments to be passed to methods.}
+\item{...}{Arguments to be passed to or from other methods.}
 }
 \description{
 \code{summary} method for class "\code{bssrest}".
@@ -31,11 +31,10 @@ placebo<-rnbinom.inar1(n=50, size=1, mu=2, rho=0.5, tp=7)
 treatment<-rnbinom.inar1(n=50, size=1, mu=1.6, rho=0.5, tp=7)
 
 #Blinded sample size reestimation
-estimate<-bssr.nb.inar1(alpha=0.025, power=0.8, delta=0.8, x=rbind(placebo, treatment), 
-n=c(50,50), k=1)
+estimate<-bssr.nb.inar1(alpha=0.025, power=0.8, delta=0.8, x=rbind(placebo, treatment),
+  n=c(50,50), k=1)
 summary(estimate)
 }
 \seealso{
 \code{\link{n.nb.inar1}} for initial sample size estimates within the NB-INAR(1) model.
 }
-

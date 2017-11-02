@@ -1,6 +1,5 @@
 #' @title Blinded Sample Size Recalculation for a One Subgroup Design
-#' @description Given data from an Internal Pilot Study (IPS), \code{bssr.1subgroup} reestimates the nuisance parameters, i.e. variances and prevalence, and recalculates the required sample size for proving a desired alternative when testing for
-#' an effect in the full or subpopulation. See 'Details' for more information.
+#' @description Given data from an Internal Pilot Study (IPS), \code{bssr.1subgroup} reestimates the nuisance parameters, i.e. variances and prevalence, and recalculates the required sample size for proving a desired alternative when testing for an effect in the full or subpopulation. See 'Details' for more information.
 #'
 #' @param data   data matrix with data from ongoing trial: see 'Details'.
 #' @param alpha  level (type I error) to which the hypothesis is tested.
@@ -43,19 +42,21 @@
 #' reestimate<-bssr.1subgroup(data=random,alpha=0.05,beta=0.1,delta=c(0,1),eps=0.001,
 #' approx="conservative.t",df="n1",k=2,adjust="NO")
 #' summary(reestimate)
+#'
+#' @import mvtnorm
 #' @export
 
-bssr.1subgroup<-function(data,alpha,beta,delta,eps=0.001, approx=c("conservative.t","liberal.t","normal"),df=c("n","n1"),adjust=c("YES","NO"),k=1,nmax=1000){ 
+bssr.1subgroup<-function(data,alpha,beta,delta,eps=0.001, approx=c("conservative.t","liberal.t","normal"),df=c("n","n1"),adjust=c("YES","NO"),k=1,nmax=1000){
   a<-k
   astar<-1+1/a
   tauhat<-sum(data[,2])/length(data[,2])
   deltaFiP<-(1-tauhat)*delta[1]+tauhat*delta[2]
   deltaS<-delta[2]
-  
- #--------------------------------------------------------------------#  
- #----------reestimate SDs--------------------------------------------# 
+
+  #--------------------------------------------------------------------#
+  #----------reestimate SDs--------------------------------------------#
   if(adjust=="YES"){
-     min.mixed<-function(x, daten, alloc, del){
+    min.mixed<-function(x, daten, alloc, del){
       sigma<-x
       -sum(log(alloc*dnorm(daten, del, sigma)+(1-alloc)*dnorm(daten, 0, sigma)))
     }
@@ -69,33 +70,33 @@ bssr.1subgroup<-function(data,alpha,beta,delta,eps=0.001, approx=c("conservative
   sigma<-c(SigmaFhat,SigmaShat)#c(sqrt(tauhat*1^2+(1-tauhat)*1^2), 1)#
   names(sigma)<-c("Full","Sub")
   names(delta)<-c("Full|Sub", "Sub")
-  #--------------------------------------------------------------------# 
-  #--------------------------------------------------------------------# 
-  
+  #--------------------------------------------------------------------#
+  #--------------------------------------------------------------------#
+
   if(df=="n" || approx=="normal"){
     SigmaFffind<-sqrt((SigmaFhat^2-tauhat*SigmaShat^2)/(1-tauhat))
     rec<-n.1subgroup(alpha=alpha,beta=beta, delta=delta, sigma=c(SigmaFffind,SigmaShat), tau=tauhat, eps=eps, approx=approx, k=k,nmax=nmax)
     nrec<-rec$n
   }
   if(df=="n1"){
-    #--------------------------------------------------------------------# 
-    #--------------------------------------------------------------------# 
+    #--------------------------------------------------------------------#
+    #--------------------------------------------------------------------#
     find<-function(n,alpha,beta,eps,alloc, sigma, delta, tau, approx=c("conservative.t","liberal.t"),n1,z=0){
       a<-alloc
       astar<-1+1/a
       deltaFiP<-(1-tau)*delta[1]+tau*delta[2]
       n_P<-floor((n[2]+n[1])/2)+1
-      S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigma[1]^2,sqrt(tau)*sigma[2]/sigma[1]*(1+deltaFiP*delta[2]/sigma[1]^2/8),sqrt(tau)*sigma[2]/sigma[1]*(1+deltaFiP*delta[2]/sigma[1]^2/8),1+1/4*delta[2]^2/sigma[2]^2),byrow=TRUE,ncol=2))      
+      S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigma[1]^2,sqrt(tau)*sigma[2]/sigma[1]*(1+deltaFiP*delta[2]/sigma[1]^2/8),sqrt(tau)*sigma[2]/sigma[1]*(1+deltaFiP*delta[2]/sigma[1]^2/8),1+1/4*delta[2]^2/sigma[2]^2),byrow=TRUE,ncol=2))
       Z<-c(deltaFiP/sigma[1],delta[2]/sigma[2])
       if(z==0){
-      if(approx=="conservative.t"){
-        z<-qmvt(1-alpha, delta=c(0,0), df=n1[1]-2, corr=S, tail="lower")$quantile
-        pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=n1[1]-2, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
-      }
-      if(approx=="liberal.t"){
-        z<-qmvt(1-alpha, delta=c(0,0), df=n1[2]-4, corr=S, tail="lower")$quantile
-        pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=n1[2]-4, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
-      }  
+        if(approx=="conservative.t"){
+          z<-qmvt(1-alpha, delta=c(0,0), df=n1[1]-2, corr=S, tail="lower")$quantile
+          pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=n1[1]-2, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
+        }
+        if(approx=="liberal.t"){
+          z<-qmvt(1-alpha, delta=c(0,0), df=n1[2]-4, corr=S, tail="lower")$quantile
+          pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=n1[2]-4, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
+        }
       }
       if(z!=0){
         if(approx=="conservative.t"){
@@ -103,7 +104,7 @@ bssr.1subgroup<-function(data,alpha,beta,delta,eps=0.001, approx=c("conservative
         }
         if(approx=="liberal.t"){
           pow<-1-pmvt(sqrt(c(n_P/astar,tau*n_P/astar))*Z, df=n1[2]-4, corr=S,lower=c(-Inf,-Inf),upper=c(z,z))[1]
-        }    
+        }
       }
 
       #print(n_P);print(pow)
@@ -117,17 +118,17 @@ bssr.1subgroup<-function(data,alpha,beta,delta,eps=0.001, approx=c("conservative
       }
       return(n_P)
     }
-    
-    #--------------------------------------------------------------------# 
-    #--------------------------------------------------------------------# 
+
+    #--------------------------------------------------------------------#
+    #--------------------------------------------------------------------#
     n1<-c(sum(data[,2]),length(data[,2]))
     n_P<-find(n=c(0,nmax),alpha=alpha,beta=beta,eps=eps,alloc=k, sigma=sigma, delta=delta, tau=tauhat, approx=approx,n1=n1)
     nrec<-c(n_P,a*n_P)
   }
-  
+
   if (sum(nrec)>nmax){
     Z<-c(deltaFiP/sigma[1],deltaS/sigma[2])
-    S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigma[1]^2,sqrt(tauhat)*sigma[2]/sigma[1]*(1+deltaFiP*deltaS/sigma[1]^2/8),sqrt(tauhat)*sigma[2]/sigma[1]*(1+deltaFiP*deltaS/sigma[1]^2/8),1+1/4*deltaS^2/sigma[2]^2),byrow=TRUE,ncol=2))    
+    S<-cov2cor(matrix(c(1+1/4*deltaFiP^2/sigma[1]^2,sqrt(tauhat)*sigma[2]/sigma[1]*(1+deltaFiP*deltaS/sigma[1]^2/8),sqrt(tauhat)*sigma[2]/sigma[1]*(1+deltaFiP*deltaS/sigma[1]^2/8),1+1/4*deltaS^2/sigma[2]^2),byrow=TRUE,ncol=2))
     n_P<-floor(nmax/(a+1))
     ns_P<-floor(tauhat*n_P)
     if(approx=="conservative.t"){
@@ -146,10 +147,12 @@ bssr.1subgroup<-function(data,alpha,beta,delta,eps=0.001, approx=c("conservative
     cat("recalculated total sample size exceeds nmax = ", nmax, ";\n")
     cat("expected power using nmax subjects: ", round(pow,2))
   }
- 
+
   names(nrec)<-c("Control", "Treatment")
   model<-"normal1subgroup"
   result<-list(n=nrec, alpha=alpha, beta=beta, delta=delta, sigma.est=sigma, tau.est=tauhat, eps=eps, approx=approx, k=a, model=model)
   class(result)<-"bssrest"
   return(result)
 }
+
+

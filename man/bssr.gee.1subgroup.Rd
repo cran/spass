@@ -13,39 +13,36 @@ bssr.gee.1subgroup(alpha, tail = "both", beta = NULL, delta, estsigma,
 \arguments{
 \item{alpha}{level (type I error) to which the hypothesis is tested.}
 
-\item{tail}{which type of test is used, e.g. which quartile und H0 is calculated}
+\item{tail}{which type of test is used, e.g. which quartile und H0 is calculated.}
 
 \item{beta}{type II error (power=1-beta) to which an alternative should be proven.}
 
-\item{delta}{vector of regression coefficients values which shall be proven, c(allcomers, only subpopulation).}
+\item{delta}{vector of estimated treatment effect in overall and sub population, c(overall population, only subpopulation).}
 
-\item{estsigma}{reestimated vector of assymptotic standard deviations.}
+\item{estsigma}{vector of re-estimated standard deviations, c(full population, subpopulation). See 'Details'.}
 
-\item{tau}{ration between F/S and S}
+\item{tau}{ratio between complementary F/S and sub-population S.}
 
-\item{k}{sample size allocation factor between groups: see 'Details'.}
+\item{k}{treatment allocation factor between groups: see 'Details'.}
 }
 \value{
-\code{bssr.gee.1subgroup} returns a list containing the recalculated required sample size within the control group and treatment group along with all relevant parameters. Use \code{\link{summary.bssrest}} for a structured overview.
+\code{bssr.gee.1subgroup} returns a list containing the recalculated sample sizes along with all relevant parameters. Use \code{\link{summary.bssrest}} for a structured overview.
 }
 \description{
-Given data from an Internal Pilot Study (IPS), \code{bssr.GEE.1subgroup} given the reestimated nuisance parameteres are calculated. \code{bssr.gee.1subgroup} is a wraper for \code{n.gee.1subgroup} because the reestimation of the variances can be highly dependable on the user and should be done seperatly. see "detail" for more information on that.
+Given re-estimations from an Internal Pilot Study (IPS), \code{bssr.GEE.1subgroup} re-estimates required sample size given the re-estimated nuisance parameters are given. \code{bssr.gee.1subgroup} is a wrapper for \code{n.gee.1subgroup} where the re-estimation of the variances can be highly dependable on the user and should be supplied separately. see "detail" for more information.
 }
 \details{
-This function provides a simple warper for \code{n.gee.1subgroup} where instead of initial assumptions blind estimated nuisance parameter inserted.
-For information see \code{n.gee.1subgroup}.
-alternative \code{delta} with a specified power 1-\code{beta} when testing the global null hypothesis \eqn{H_0: \beta_3^F=\beta_3^S=0} to level \code{alpha} is calculated.
+This function provides a simple warped for \code{n.gee.1subgroup} where instead of initial assumptions, reestimated nuisance parameter are used.
+For more information see \code{n.gee.1subgroup}.
+Required samplesize to test alternative \code{delta} with specified power 1-\code{beta} when testing the global null hypothesis \eqn{H_0: \beta_3^F=\beta_3^S=0} to level \code{alpha} is estimated. When testing outcomes have variance \code{estsigma}.
 
-The data matrix \code{data} should have as many columns as observed timepoints: first column first observed timepoint. As of now the timepoints must be equispaced to calculate the correct intra-subject covariance-matrix. Entries can be \code{NA}. See \code{r.gee.1subgroup.r} for more information.
-
-For sample sizes \eqn{n_C} and \eqn{n_T} of the control and treatment group, respectively, the argument \code{k} is the
-sample size allocation factor, i.e. \eqn{k = n_T/n_C}.
+For sample sizes \eqn{n_C} and \eqn{n_T} of the control and treatment group respectively, the argument \code{k} is the
+sample size allocation factor, i.e. \eqn{k = n_T/n_C} and \code{tau} represents the ratio of the sub-population.
 }
 \examples{
 estimate<-bssr.gee.1subgroup(alpha=0.05,beta=0.2,delta=c(0.1,0.1),estsigma=c(0.8,0.4),tau=0.4, k=1)
 summary(estimate)
 }
 \seealso{
-\code{\link{n.gee.1subgroup}} for sample size calculation prior to the trial, \code{r.gee.1subgroup} how list data should look like and \code{estimcov} how the reestimation of nuisance parameters works. See \eqn{sim.gee} for an enxample for an initial sample size estimation and reestimation to see the functions working in junction.
+\code{\link{n.gee.1subgroup}} for sample size calculation prior to a trial and \code{estimcov} how the re-estimate nuisance parameters. See \eqn{sim.gee} for a working example for an initial sample size estimation and a re-estimation mid trial.
 }
-

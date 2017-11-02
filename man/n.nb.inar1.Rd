@@ -44,8 +44,8 @@ test for the ratio between the two rates, i.e. \eqn{\mu_T/\mu_C = 1}. The ratio 
 \eqn{\delta = \mu_T/\mu_C}.
 
 \code{n.nb.inar1} gives back the required sample size for the control and treatment group required to prove an existing
-alternative \code{theta} with a specified power \code{power} when testing the null hypothesis \eqn{H_0: \mu_T/\mu_C \ge 1} to level \code{alpha}. 
-If \code{power} is not specified but instead \code{npow}, the power achieved with a total sample size of \code{npow} is calculated. 
+alternative \code{theta} with a specified power \code{power} when testing the null hypothesis \eqn{H_0: \mu_T/\mu_C \ge 1} to level \code{alpha}.
+If \code{power} is not specified but instead \code{npow}, the power achieved with a total sample size of \code{npow} is calculated.
 
 For sample sizes \eqn{n_C} and \eqn{n_T} of the control and treatment group, respectively, the argument \code{k} is the
 sample size allocation factor, i.e. \eqn{k = n_T/n_C}.
@@ -67,4 +67,3 @@ summary(estimate)
 initial parameters required when performing sample size estimation, \code{\link{bssr.nb.inar1}} for blinded
 sample size reestimation within a running trial.
 }
-

@@ -2,9 +2,9 @@
 % Please edit documentation in R/estimcov.r
 \name{estimcov}
 \alias{estimcov}
-\title{Estimation of variance, intra-subject-correlation and dropout}
+\title{Estimation of simulation parameters}
 \source{
-\code{estimcov} uses code contributed Roland Gerard Gera.
+\code{estimcov} uses code contributed by Roland Gerard Gera.
 }
 \usage{
 estimcov(data, Time, Startvalues = c(3, 0.5, 1), stepwidth = c(0.001, 0.001,
@@ -12,42 +12,39 @@ estimcov(data, Time, Startvalues = c(3, 0.5, 1), stepwidth = c(0.001, 0.001,
   5, 3))
 }
 \arguments{
-\item{data}{list of gathered data. The list must be consistent with the gernerated data of \code{\link{r.gee.1subgroup}}}
+\item{data}{matrix with the dataset which is used to estimate the covariance and dropout structure.}
 
-\item{Time}{list with observed time points: see 'Details'}
+\item{Time}{vector with observation-times.}
 
-\item{Startvalues}{startvalues for the paramteres \code{var},\code{rho} and \code{theta}}
+\item{Startvalues}{vector with starting values for variance, \code{rho} and \code{theta} respectively.}
 
-\item{stepwidth}{vector of stepwidths which the optimisation-function should use}
+\item{stepwidth}{vector describing the step length of previously mentioned values.}
 
-\item{maxiter}{value setting maximal amount of iterations for the optimisation algorithm}
+\item{maxiter}{maximum amount of iterations}
 
-\item{lower}{lower bound for \code{var},\code{rho} and \code{theta}}
+\item{lower}{vector with minimum for the parameters described in Startvalues}
 
-\item{upper}{upper bound for \code{var},\code{rho} and \code{theta}}
+\item{upper}{vector with maximum for the parameters described in Startvalues}
 }
 \value{
-\code{estimcov} returns a list with two vectors. The first entry consists of a vector with estimations for c(\code{var},\code{rho},\code{theta})
-while the second entry contains a vector, describing the empirical dropout-chance per timepoint.
+\code{estimcov} returns a list with two entries. In the first the parameters variance, \code{rho} and \code{theta} are returned and in the second a vector with the dropout-rate is returned.
 }
 \description{
-\code{estimcov} estimates variance, intra-subject-correlation and dropout given empirical data.
+\code{estimcov} estimates the covariance matrix and dropout rates given a dataset and observation-times
 }
 \details{
-Function \code{estimcov} fits a covariance-matrix with parameters \code{var},\code{rho} and \code{theta} (see \code{\link{gen_cov_cor}} for matrix generation) to an empirical covarince-matrix provided by \code{data}.
+This function is designed to estimate the variance, \code{rho} and \code{theta} and a vector with the dropout rate in the data.
 }
 \examples{
-#Generate data from longitudinal-model
+# First generate a dataset with 200 patients, rho =0.25 and tau = 0.5 and
+# then estimate the parameters using estimcov.
+
 set.seed(2015)
-dataset<-r.gee.1subgroup(n=300, reg=list(c(0,0,0,0.1),c(0,0,0,0.1)), sigma=c(3,2.5), tau=0.5, 
-rho=0.25, theta=1, k=1.5, Time=c(0:5), OD=0.2)
+dataset <- r.gee.1subgroup(n=200, reg=list(c(0,0,0,0.1),c(0,0,0,0.1)), sigma=c(3,2.5),
+  tau=0.5, rho=0.25, theta=1, k=1.5, Time=c(0:5), OD=0)
 
-estimate<-estimcov(data=dataset,Time=c(0:5))
-estimate
-}
-\seealso{
-\code{\link{r.gee.1subgroup}} for information on the generated longitudinal data and \code{\link{n.gee.1subgroup}} for the calculation of
-initial sample sizes for longitudinal GEE-models and \code{\link{bssr.gee.1subgroup}} for blinded
-sample size reestimation within a trial. See \code{\link{gen_cov_cor}} for more information on the generation of covariance matrices.
-}
+estimations <- estimcov(data=dataset,Time=c(0:5))
+estimations[[1]]
+estimations[[2]]
 
+}

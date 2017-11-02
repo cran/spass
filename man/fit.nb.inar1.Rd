@@ -49,4 +49,3 @@ McKenzie Ed (1986), Autoregressive Moving-Average Processes with Negative-Binomi
 initial sample size required when performing inference, \code{\link{bssr.nb.inar1}} for blinded
 sample size reestimation within a running trial, \code{\link{optim}} for more information on the used minimization algorithms.
 }
-

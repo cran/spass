@@ -63,4 +63,3 @@ summary(estimate)
 initial sample size required when performing inference, \code{\link{fit.nb.inar1}} for calculating
 initial parameters required when performing sample size estimation
 }
-

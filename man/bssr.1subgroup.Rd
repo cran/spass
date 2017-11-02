@@ -36,8 +36,7 @@ bssr.1subgroup(data, alpha, beta, delta, eps = 0.001,
 \code{bssr.1subgroup} returns a list containing the recalculated required sample size within the control group and treatment group along with all relevant parameters. Use \code{\link{summary.bssrest}} for a structured overview.
 }
 \description{
-Given data from an Internal Pilot Study (IPS), \code{bssr.1subgroup} reestimates the nuisance parameters, i.e. variances and prevalence, and recalculates the required sample size for proving a desired alternative when testing for
-an effect in the full or subpopulation. See 'Details' for more information.
+Given data from an Internal Pilot Study (IPS), \code{bssr.1subgroup} reestimates the nuisance parameters, i.e. variances and prevalence, and recalculates the required sample size for proving a desired alternative when testing for an effect in the full or subpopulation. See 'Details' for more information.
 }
 \details{
 This function performs blinded nuisance parameter reestimation in a design with a subgroup within a full population where we want to test for treatment effects between a control and a treatment group.
@@ -63,8 +62,8 @@ random<-r.1subgroup(n=50, delta=c(0,1), sigma=c(1,1.2), tau=0.4, fix.tau="YES", 
 reestimate<-bssr.1subgroup(data=random,alpha=0.05,beta=0.1,delta=c(0,1),eps=0.001,
 approx="conservative.t",df="n1",k=2,adjust="NO")
 summary(reestimate)
+
 }
 \seealso{
 \code{\link{n.1subgroup}} for sample size calculation prior to the trial.
 }
-

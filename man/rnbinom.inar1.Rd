@@ -52,4 +52,3 @@ col=c("red", "black"), lty=1, lwd=c(1,2))
 \references{
 McKenzie Ed (1986), Autoregressive Moving-Average Processes with Negative-Binomial and Geometric Marginal Distributions. \emph{Advances in Applied Probability} Vol. 18, No. 3, pp. 679-705.
 }
-
