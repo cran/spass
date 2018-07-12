@@ -1,5 +1,5 @@
 #' @title Sample Size Calculation for Comparing Two Groups when observing Longitudinal Count Data with marginal Negative Binomial Distribution and underlying Gamma Frailty with Autoregressive Correlation Structure of Order One
-#' @description \code{n.nb.inar1} calculates required sample sizes for testing trend parameters in a Gamma frailty model
+#' @description \code{n.nb.gf} calculates required sample sizes for testing trend parameters in a Gamma frailty model
 #'
 #'
 #' @param alpha  level (type I error) to which the hypothesis is tested.
@@ -38,9 +38,9 @@
 #'
 #'
 #' @examples
-#' ##The example is commented as it may take longer than 10 seconds to run. 
+#' ##The example is commented as it may take longer than 10 seconds to run.
 #' ##Please uncomment prior to execution.
-#' 
+#'
 #' ##Example for constant rates
 #' #h<-function(lambda.eta){
 #' #   lambda.eta[2]

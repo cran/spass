@@ -43,8 +43,8 @@
 
 fit.nb.gf <- function(dataC, dataE, trend=c("constant", "exponential"),
                       lower, upper, method="L-BFGS-B", start, approx=20, rho = FALSE, H0 = FALSE, h0=0){
-  groupC<-dataC
-  groupE<-dataE
+  groupC<-as.matrix(dataC)
+  groupE<-as.matrix(dataE)
 
   nC<-nrow(groupC)
   nE<-nrow(groupE)
@@ -64,8 +64,8 @@ fit.nb.gf <- function(dataC, dataE, trend=c("constant", "exponential"),
         upper <- c(Inf, Inf, Inf)
       }
       if(missing(start)){
-        start <- c(log(mean(groupE)), log(mean(groupC)), max(0.01, mean(groupC)^2/(var(groupC[,1])-mean(groupC))))
-        start.re <- c(log(mean(groupE)), max(log(mean(groupC)), h0), max(0.01, mean(groupC)^2/(var(groupC[,1])-mean(groupC))))
+        start <- c(log(mean(groupE, na.rm=T)), log(mean(groupC, na.rm=T)), max(0.01, mean(groupC, na.rm=T)^2/(var(groupC[,1], na.rm=T)-mean(groupC, na.rm=T))))
+        start.re <- c(log(mean(groupE, na.rm=T)), max(log(mean(groupC, na.rm=T)), h0), max(0.01, mean(groupC, na.rm=T)^2/(var(groupC[,1], na.rm=T)-mean(groupC, na.rm=T))))
       }
       erg <- optim(start, mlFirst, gr=mlFirstGrad, lower = lower, upper=upper, method = "L-BFGS-B",
                    groupE=groupE, groupC=groupC, tpE=tpE, tpC=tpC,
@@ -91,13 +91,13 @@ fit.nb.gf <- function(dataC, dataE, trend=c("constant", "exponential"),
         upper <- c(Inf, Inf, Inf, Inf)
       }
       if(missing(start)){
-        start <- c(log(mean(groupC[,1])), log(mean(groupE[,2]))-log(mean(groupE[,1])), log(mean(groupC[,2]))-log(mean(groupC[,1]))-log(mean(groupE[,2]))+log(mean(groupE[,1])), max(0.01, mean(groupC)^2/(var(groupC[,1])-mean(groupC))))
-        start.re <- c(log(mean(groupC[,1])), log(mean(groupE[,2]))-log(mean(groupE[,1])), max(log(mean(groupC[,2]))-log(mean(groupC[,1]))-log(mean(groupE[,2]))+log(mean(groupE[,1])),h0), max(0.01, mean(groupC)^2/(var(groupC[,1])-mean(groupC))))
+        start <- c(log(mean(groupC[,1], na.rm=T)), log(mean(groupE[,2], na.rm=T))-log(mean(groupE[,1], na.rm=T)), log(mean(groupC[,2], na.rm=T))-log(mean(groupC[,1], na.rm=T))-log(mean(groupE[,2], na.rm=T))+log(mean(groupE[,1])), max(0.01, mean(groupC, na.rm=T)^2/(var(groupC[,1], na.rm=T)-mean(groupC, na.rm=T))))
+        start.re <- c(log(mean(groupC[,1], na.rm=T)), log(mean(groupE[,2], na.rm=T))-log(mean(groupE[,1], na.rm=T)), max(log(mean(groupC[,2], na.rm=T))-log(mean(groupC[,1], na.rm=T))-log(mean(groupE[,2], na.rm=T))+log(mean(groupE[,1], na.rm=T)),h0), max(0.01, mean(groupC, na.rm=T)^2/(var(groupC[,1], na.rm=T)-mean(groupC, na.rm=T))))
       }
       erg <- optim(start, mlFirst, gr=mlFirstGrad, lower = lower, upper=upper, method = "L-BFGS-B",
                    groupE=groupE, groupC=groupC, tpE=tpE, tpC=tpC,
                    nE=nE, nC=nC, type=2)
-      erg.re <- optim(start, mlFirst, gr=mlFirstGrad, lower = lower, upper=upper, method = "L-BFGS-B",
+      erg.re <- optim(start.re, mlFirst, gr=mlFirstGrad, lower = lower, upper=upper, method = "L-BFGS-B",
                    groupE=groupE, groupC=groupC, tpE=tpE, tpC=tpC,
                    nE=nE, nC=nC, type=2)
 
@@ -152,7 +152,7 @@ fit.nb.gf <- function(dataC, dataE, trend=c("constant", "exponential"),
     }
 
     if(rho==TRUE){
-      rho <- optim(cor(dataC[,1], dataC[,2], use="pairwise.complete.obs"), y=erg$par, groupE = dataE, groupC = dataC, nE = nE, nC = nC,
+      rho <- optim(cor(dataC[,1], dataC[,2], use="pairwise.complete.obs"), y=erg$par, groupE = as.matrix(dataE), groupC = as.matrix(dataC), nE = nE, nC = nC,
                    tpE = tpE, tpC = tpC, type = type, fn=mlSecond, lower = 0, upper=1, method = "Brent")$par
       erg$rho <- rho
     }

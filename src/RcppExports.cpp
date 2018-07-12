@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // minFunc
 double minFunc(NumericVector x, NumericVector daten, int dataNA);
-RcppExport SEXP spass_minFunc(SEXP xSEXP, SEXP datenSEXP, SEXP dataNASEXP) {
+RcppExport SEXP _spass_minFunc(SEXP xSEXP, SEXP datenSEXP, SEXP dataNASEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // minFuncMult
 double minFuncMult(NumericVector x, NumericMatrix daten, NumericVector dataNA, int n);
-RcppExport SEXP spass_minFuncMult(SEXP xSEXP, SEXP datenSEXP, SEXP dataNASEXP, SEXP nSEXP) {
+RcppExport SEXP _spass_minFuncMult(SEXP xSEXP, SEXP datenSEXP, SEXP dataNASEXP, SEXP nSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,7 +34,7 @@ END_RCPP
 }
 // minFuncBlinded
 double minFuncBlinded(NumericVector x, NumericMatrix daten, NumericVector dataNA, NumericVector n, double delta);
-RcppExport SEXP spass_minFuncBlinded(SEXP xSEXP, SEXP datenSEXP, SEXP dataNASEXP, SEXP nSEXP, SEXP deltaSEXP) {
+RcppExport SEXP _spass_minFuncBlinded(SEXP xSEXP, SEXP datenSEXP, SEXP dataNASEXP, SEXP nSEXP, SEXP deltaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -49,7 +49,7 @@ END_RCPP
 }
 // mlFirst
 double mlFirst(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type);
-RcppExport SEXP spass_mlFirst(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlFirst(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -67,7 +67,7 @@ END_RCPP
 }
 // mlFirstOneGroup
 double mlFirstOneGroup(NumericVector y, NumericMatrix groupC, int nC, NumericVector tpC, int type);
-RcppExport SEXP spass_mlFirstOneGroup(SEXP ySEXP, SEXP groupCSEXP, SEXP nCSEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlFirstOneGroup(SEXP ySEXP, SEXP groupCSEXP, SEXP nCSEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -82,7 +82,7 @@ END_RCPP
 }
 // mlSecond
 double mlSecond(double rho, NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type);
-RcppExport SEXP spass_mlSecond(SEXP rhoSEXP, SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlSecond(SEXP rhoSEXP, SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -101,7 +101,7 @@ END_RCPP
 }
 // mlSecondOneGroup
 double mlSecondOneGroup(double rho, NumericVector y, NumericMatrix groupC, int nC, NumericVector tpC, int type);
-RcppExport SEXP spass_mlSecondOneGroup(SEXP rhoSEXP, SEXP ySEXP, SEXP groupCSEXP, SEXP nCSEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlSecondOneGroup(SEXP rhoSEXP, SEXP ySEXP, SEXP groupCSEXP, SEXP nCSEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -117,7 +117,7 @@ END_RCPP
 }
 // mlFirstGrad
 NumericVector mlFirstGrad(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type);
-RcppExport SEXP spass_mlFirstGrad(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlFirstGrad(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -135,7 +135,7 @@ END_RCPP
 }
 // mlFirstHObs
 NumericMatrix mlFirstHObs(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type);
-RcppExport SEXP spass_mlFirstHObs(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlFirstHObs(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -153,7 +153,7 @@ END_RCPP
 }
 // mlFirstHExp
 NumericMatrix mlFirstHExp(NumericVector y, double kf, int tp, int type);
-RcppExport SEXP spass_mlFirstHExp(SEXP ySEXP, SEXP kfSEXP, SEXP tpSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlFirstHExp(SEXP ySEXP, SEXP kfSEXP, SEXP tpSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -167,7 +167,7 @@ END_RCPP
 }
 // mlFirstJObs
 NumericMatrix mlFirstJObs(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type);
-RcppExport SEXP spass_mlFirstJObs(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
+RcppExport SEXP _spass_mlFirstJObs(SEXP ySEXP, SEXP groupESEXP, SEXP groupCSEXP, SEXP nESEXP, SEXP nCSEXP, SEXP tpESEXP, SEXP tpCSEXP, SEXP typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -185,7 +185,7 @@ END_RCPP
 }
 // mlFirstJExp
 NumericMatrix mlFirstJExp(NumericVector y, double rho, double kf, int tp, int type, int approx);
-RcppExport SEXP spass_mlFirstJExp(SEXP ySEXP, SEXP rhoSEXP, SEXP kfSEXP, SEXP tpSEXP, SEXP typeSEXP, SEXP approxSEXP) {
+RcppExport SEXP _spass_mlFirstJExp(SEXP ySEXP, SEXP rhoSEXP, SEXP kfSEXP, SEXP tpSEXP, SEXP typeSEXP, SEXP approxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -201,7 +201,7 @@ END_RCPP
 }
 // mlFirstBlinded
 double mlFirstBlinded(NumericVector y, NumericMatrix group, int n, NumericVector tp, int type, double theta, double k);
-RcppExport SEXP spass_mlFirstBlinded(SEXP ySEXP, SEXP groupSEXP, SEXP nSEXP, SEXP tpSEXP, SEXP typeSEXP, SEXP thetaSEXP, SEXP kSEXP) {
+RcppExport SEXP _spass_mlFirstBlinded(SEXP ySEXP, SEXP groupSEXP, SEXP nSEXP, SEXP tpSEXP, SEXP typeSEXP, SEXP thetaSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -218,7 +218,7 @@ END_RCPP
 }
 // mlSecondBlinded
 double mlSecondBlinded(double rho, NumericVector y, NumericMatrix group, int n, NumericVector tp, int type, double k);
-RcppExport SEXP spass_mlSecondBlinded(SEXP rhoSEXP, SEXP ySEXP, SEXP groupSEXP, SEXP nSEXP, SEXP tpSEXP, SEXP typeSEXP, SEXP kSEXP) {
+RcppExport SEXP _spass_mlSecondBlinded(SEXP rhoSEXP, SEXP ySEXP, SEXP groupSEXP, SEXP nSEXP, SEXP tpSEXP, SEXP typeSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -235,20 +235,20 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"spass_minFunc", (DL_FUNC) &spass_minFunc, 3},
-    {"spass_minFuncMult", (DL_FUNC) &spass_minFuncMult, 4},
-    {"spass_minFuncBlinded", (DL_FUNC) &spass_minFuncBlinded, 5},
-    {"spass_mlFirst", (DL_FUNC) &spass_mlFirst, 8},
-    {"spass_mlFirstOneGroup", (DL_FUNC) &spass_mlFirstOneGroup, 5},
-    {"spass_mlSecond", (DL_FUNC) &spass_mlSecond, 9},
-    {"spass_mlSecondOneGroup", (DL_FUNC) &spass_mlSecondOneGroup, 6},
-    {"spass_mlFirstGrad", (DL_FUNC) &spass_mlFirstGrad, 8},
-    {"spass_mlFirstHObs", (DL_FUNC) &spass_mlFirstHObs, 8},
-    {"spass_mlFirstHExp", (DL_FUNC) &spass_mlFirstHExp, 4},
-    {"spass_mlFirstJObs", (DL_FUNC) &spass_mlFirstJObs, 8},
-    {"spass_mlFirstJExp", (DL_FUNC) &spass_mlFirstJExp, 6},
-    {"spass_mlFirstBlinded", (DL_FUNC) &spass_mlFirstBlinded, 7},
-    {"spass_mlSecondBlinded", (DL_FUNC) &spass_mlSecondBlinded, 7},
+    {"_spass_minFunc", (DL_FUNC) &_spass_minFunc, 3},
+    {"_spass_minFuncMult", (DL_FUNC) &_spass_minFuncMult, 4},
+    {"_spass_minFuncBlinded", (DL_FUNC) &_spass_minFuncBlinded, 5},
+    {"_spass_mlFirst", (DL_FUNC) &_spass_mlFirst, 8},
+    {"_spass_mlFirstOneGroup", (DL_FUNC) &_spass_mlFirstOneGroup, 5},
+    {"_spass_mlSecond", (DL_FUNC) &_spass_mlSecond, 9},
+    {"_spass_mlSecondOneGroup", (DL_FUNC) &_spass_mlSecondOneGroup, 6},
+    {"_spass_mlFirstGrad", (DL_FUNC) &_spass_mlFirstGrad, 8},
+    {"_spass_mlFirstHObs", (DL_FUNC) &_spass_mlFirstHObs, 8},
+    {"_spass_mlFirstHExp", (DL_FUNC) &_spass_mlFirstHExp, 4},
+    {"_spass_mlFirstJObs", (DL_FUNC) &_spass_mlFirstJObs, 8},
+    {"_spass_mlFirstJExp", (DL_FUNC) &_spass_mlFirstJExp, 6},
+    {"_spass_mlFirstBlinded", (DL_FUNC) &_spass_mlFirstBlinded, 7},
+    {"_spass_mlSecondBlinded", (DL_FUNC) &_spass_mlSecondBlinded, 7},
     {NULL, NULL, 0}
 };
 

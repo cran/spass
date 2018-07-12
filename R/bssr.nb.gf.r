@@ -36,9 +36,9 @@
 #' initial parameters required when performing sample size estimation.
 #'
 #' @examples
-#' ##The example is commented as it may take longer than 10 seconds to run. 
+#' ##The example is commented as it may take longer than 10 seconds to run.
 #' ##Please uncomment prior to execution.
-#' 
+#'
 #' ##Example for constant rates
 #' #set.seed(12)
 #' #h<-function(lambda.eta){
@@ -67,6 +67,8 @@
 #' @export
 bssr.nb.gf<-function(data, alpha=0.025, power=0.8, delta, h0=0, tp, k, trend=c("constant", "exponential", "custom"), approx = 20){
 
+  data<-as.matrix(data)
+
   if(trend == "constant"){
     type <- 1
     start <- c(log(mean(data, na.rm=T)), mean(data, na.rm=T)^2/(var(c(data), na.rm=T)-mean(data, na.rm=T)))
@@ -79,7 +81,7 @@ bssr.nb.gf<-function(data, alpha=0.025, power=0.8, delta, h0=0, tp, k, trend=c("
     }
   }else if(trend == "exponential"){
     type <- 2
-    start <- c(log(mean(data[,1], na.rm=T)), log(mean(data[,2], na.rm=T))-log(mean(data[,1], na.rm=T)), max(0.01, mean(data, na.rm=T)^2/(var(data[,1])-mean(data, na.rm=T))))
+    start <- c(log(mean(data[,1], na.rm=T)), log(mean(data[,2], na.rm=T))-log(mean(data[,1], na.rm=T)), max(0.01, mean(data, na.rm=T)^2/(var(c(data), na.rm=T)-mean(data, na.rm=T))))
     lower <- c(-Inf, -Inf, 1e-10); upper <- c(Inf, Inf, Inf)
     h<-function(lambda.eta){
       lambda.eta[3]
