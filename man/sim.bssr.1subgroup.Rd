@@ -7,10 +7,24 @@
 \code{sim.bssr.1subgroup} uses code contributed by Marius Placzek.
 }
 \usage{
-sim.bssr.1subgroup(nsim = 1000, alpha, beta, delta, sigma, tau, vdelta,
-  vsigma, vtau, rec.at = 1/2, eps = 0.001, approx = c("conservative.t",
-  "liberal.t", "normal"), df = c("n", "n1"), fix.tau = c("YES", "NO"),
-  k = 1, adjust = c("YES", "NO"))
+sim.bssr.1subgroup(
+  nsim = 1000,
+  alpha,
+  beta,
+  delta,
+  sigma,
+  tau,
+  vdelta,
+  vsigma,
+  vtau,
+  rec.at = 1/2,
+  eps = 0.001,
+  approx = c("conservative.t", "liberal.t", "normal"),
+  df = c("n", "n1"),
+  fix.tau = c("YES", "NO"),
+  k = 1,
+  adjust = c("YES", "NO")
+)
 }
 \arguments{
 \item{nsim}{number of simulation runs.}

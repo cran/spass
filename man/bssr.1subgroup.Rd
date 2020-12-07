@@ -7,9 +7,18 @@
 \code{bssr.1subgroup} uses code contributed by Marius Placzek.
 }
 \usage{
-bssr.1subgroup(data, alpha, beta, delta, eps = 0.001,
-  approx = c("conservative.t", "liberal.t", "normal"), df = c("n", "n1"),
-  adjust = c("YES", "NO"), k = 1, nmax = 1000)
+bssr.1subgroup(
+  data,
+  alpha,
+  beta,
+  delta,
+  eps = 0.001,
+  approx = c("conservative.t", "liberal.t", "normal"),
+  df = c("n", "n1"),
+  adjust = c("YES", "NO"),
+  k = 1,
+  nmax = 1000
+)
 }
 \arguments{
 \item{data}{data matrix with data from ongoing trial: see 'Details'.}

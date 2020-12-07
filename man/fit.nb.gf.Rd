@@ -7,9 +7,19 @@
 \code{fit.nb.gf} uses code contributed by Thomas Asendorf.
 }
 \usage{
-fit.nb.gf(dataC, dataE, trend = c("constant", "exponential"), lower, upper,
-  method = "L-BFGS-B", start, approx = 20, rho = FALSE, H0 = FALSE,
-  h0 = 0)
+fit.nb.gf(
+  dataC,
+  dataE,
+  trend = c("constant", "exponential"),
+  lower,
+  upper,
+  method = "L-BFGS-B",
+  start,
+  approx = 20,
+  rho = FALSE,
+  H0 = FALSE,
+  h0 = 0
+)
 }
 \arguments{
 \item{dataC}{a matrix containing count data from the control group, which is to be fitted. Columns correspond to time points, rows to observations.}

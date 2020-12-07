@@ -7,8 +7,15 @@
 \code{bssr.gee.1subgroup} uses code contributed by Roland Gerard Gera.
 }
 \usage{
-bssr.gee.1subgroup(alpha, tail = "both", beta = NULL, delta, estsigma,
-  tau = 0.5, k = 1)
+bssr.gee.1subgroup(
+  alpha,
+  tail = "both",
+  beta = NULL,
+  delta,
+  estsigma,
+  tau = 0.5,
+  k = 1
+)
 }
 \arguments{
 \item{alpha}{level (type I error) to which the hypothesis is tested.}

@@ -109,7 +109,7 @@ double ldnbinom(int x, double mu, double eta){
   if(x < 100){
     return(x*(log(mu)-log(mu+eta))+log(tgamma(x+eta))-log(tgamma(x+1))-log(tgamma(eta))+eta*(log(eta)-log(mu+eta)));
   }else{
-    return(x*(log(mu)-log(mu+eta))+(eta-1)*log(x)-log(tgamma(eta))+eta*(log(eta)-log(mu+eta)));
+    return(x*(log(mu)-log(mu+eta))+(eta-1)*log((double) x)-log(tgamma(eta))+eta*(log(eta)-log(mu+eta)));
   }
 }
 double ldnbinomDmu(int x, double mu, double eta){
@@ -141,7 +141,7 @@ double dnbinomPair(int kt, int ks, double mut, double mus, double eta, double rh
   //ACHTUNG!! rho=cor(kt,ks)
   int s, t;
   double term1, term2, term3, term4, erg = 0;
-  
+
   if(rho==0){
     erg = dnbinom(kt, mut, eta)*dnbinom(ks, mus, eta);
   }else if(rho==1){
@@ -250,7 +250,7 @@ NumericVector trendGrad(NumericVector lambda, int i, int t, int type){
 }
 NumericMatrix trendHess(NumericVector lambda, int i, int t, int type){
   //i=1 corresponds to treatment group, i=2 to control group
-  
+
   //Type 1 constant trend lambda=(lambda_1, lambda_2)
   if(type == 1){
     NumericMatrix hess(2,2);
@@ -274,15 +274,15 @@ NumericMatrix trendHess(NumericVector lambda, int i, int t, int type){
       hess(0,0)=exp(lambda(0)+t*(lambda(1)+lambda(2)));
       hess(0,1)=t*exp(lambda(0)+t*lambda(1)+t*lambda(2));hess(1,0)=hess(0,1);
       hess(0,2)=t*exp(lambda(0)+t*lambda(1)+t*lambda(2));hess(2,0)=hess(0,2);
-      hess(1,1)=pow(t,2)*exp(lambda(0)+t*lambda(1)+t*lambda(2));
-      hess(1,2)=pow(t,2)*exp(lambda(0)+t*lambda(1)+t*lambda(2));hess(2,1)=hess(1,2);
-      hess(2,2)=pow(t,2)*exp(lambda(0)+t*lambda(1)+t*lambda(2));
+      hess(1,1)=pow((double) t,(double) 2)*exp(lambda(0)+t*lambda(1)+t*lambda(2));
+      hess(1,2)=pow((double) t,(double) 2)*exp(lambda(0)+t*lambda(1)+t*lambda(2));hess(2,1)=hess(1,2);
+      hess(2,2)=pow((double) t,(double) 2)*exp(lambda(0)+t*lambda(1)+t*lambda(2));
       return(hess);
     }else{
       hess(0,0)=exp(lambda(0)+t*lambda(1));
       hess(0,1)=t*exp(lambda(0)+t*lambda(1));hess(1,0)=hess(0,1);
       hess(0,2)=0;hess(2,0)=hess(0,2);
-      hess(1,1)=pow(t,2)*exp(lambda(0)+t*lambda(1));
+      hess(1,1)=pow((double) t,(double) 2)*exp(lambda(0)+t*lambda(1));
       hess(1,2)=0;hess(2,1)=hess(1,2);
       hess(2,2)=0;
       return(hess);
@@ -295,17 +295,17 @@ NumericMatrix trendHess(NumericVector lambda, int i, int t, int type){
 /*Everything required for ML-estimation in this part*/
 // [[Rcpp::export]]
 double mlFirst(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type){
-  /* y corresponds to the parameter which are to be estimated. The last entry 
+  /* y corresponds to the parameter which are to be estimated. The last entry
   corresponds to the size, while the others correspond to the individual time points.
   Further structure of y: Last entry = size. Before each entry depends on the
   chosen trend */
-  
+
   int j,t,ny; /*j for patients; t for time points*/
   double logL; /*log likelihood*/
-  
+
   ny = y.length();
-  
-  //First group 
+
+  //First group
   logL=0;
   for(j=0;j<nE;j++){
     for(t=0;t<tpE(j);t++){
@@ -323,16 +323,16 @@ double mlFirst(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int 
 
 // [[Rcpp::export]]
 double mlFirstOneGroup(NumericVector y, NumericMatrix groupC, int nC, NumericVector tpC, int type){
-  /* y corresponds to the parameter which are to be estimated. The last entry 
+  /* y corresponds to the parameter which are to be estimated. The last entry
   corresponds to the size, while the others correspond to the individual time points.
   Further structure of y: Last entry = size. Before each entry depends on the
   chosen trend */
-  
+
   int j,t,ny; /*j for patients; t for time points*/
   double logL; /*log likelihood*/
-  
+
   ny = y.length();
-  
+
   logL=0;
   for(j=0;j<nC;j++){
     for(t=0;t<tpC(j);t++){
@@ -344,12 +344,12 @@ double mlFirstOneGroup(NumericVector y, NumericMatrix groupC, int nC, NumericVec
 
 // [[Rcpp::export]]
 double mlSecond(double rho, NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type){
-  
+
   int j,t,s,nY,r,l; /*j for patients; s,t for time points; k,l for specific calculations*/
   double logL,term1,term2,term3,term4,pairwiseProb; /*log likelihood; term1-4 specific terms in sum*/
-  
+
   nY = y.length();
-  
+
   //First group
   logL=0;
   for(j=0;j<nE;j++){
@@ -362,7 +362,7 @@ double mlSecond(double rho, NumericVector y, NumericMatrix groupE, NumericMatrix
             term2 = dnbinom(l, trend(y, 1, t, type)*(1-pow(rho, abs(s-t))), y(nY-1)*(1-pow(rho, abs(s-t))));
             term3 = dnbinom(groupE(j,t)+groupE(j,s) - r - l, (trend(y, 1, s, type)+trend(y, 1, t, type))*pow(rho, abs(s-t)), y(nY-1)*pow(rho, abs(s-t)));
             term4 = dbinom(groupE(j,s)-r, groupE(j,s)+groupE(j,t)-r-l, trend(y, 1, s, type)/(trend(y, 1, s, type)+trend(y, 1, t, type)));
-            
+
             pairwiseProb += term1*term2*term3*term4;
           }
         }
@@ -370,7 +370,7 @@ double mlSecond(double rho, NumericVector y, NumericMatrix groupE, NumericMatrix
       }
     }
   }
-  
+
   //Second Group
   for(j=0;j<nC;j++){
     for(s=0;s<(tpC(j)-1);s++){
@@ -382,9 +382,9 @@ double mlSecond(double rho, NumericVector y, NumericMatrix groupE, NumericMatrix
             term2 = dnbinom(l, trend(y, 2, t, type)*(1-pow(rho, abs(s-t))), y(nY-1)*(1-pow(rho, abs(s-t))));
             term3 = dnbinom(groupC(j,t)+groupC(j,s) - r - l, (trend(y, 2, s, type)+trend(y, 2, t, type))*pow(rho, abs(s-t)), y(nY-1)*pow(rho, abs(s-t)));
             term4 = dbinom(groupC(j,s)-r, groupC(j,s)+groupC(j,t)-r-l, trend(y, 2, s, type)/(trend(y, 2, s, type)+trend(y, 2, t, type)));
-            
+
             pairwiseProb += term1*term2*term3*term4;
-            
+
           }
         }
         logL += log(pairwiseProb);
@@ -396,12 +396,12 @@ double mlSecond(double rho, NumericVector y, NumericMatrix groupE, NumericMatrix
 
 // [[Rcpp::export]]
 double mlSecondOneGroup(double rho, NumericVector y, NumericMatrix groupC, int nC, NumericVector tpC, int type){
-  
+
   int j,t,s,nY,r,l; /*j for patients; s,t for time points; k,l for specific calculations*/
   double logL,term1,term2,term3,term4,pairwiseProb; /*log likelihood; term1-4 specific terms in sum*/
-  
+
   nY = y.length();
-  
+
   logL=0;
   for(j=0;j<nC;j++){
     for(s=0;s<(tpC(j)-1);s++){
@@ -413,9 +413,9 @@ double mlSecondOneGroup(double rho, NumericVector y, NumericMatrix groupC, int n
             term2 = dnbinom(l, trend(y, 2, t, type)*(1-pow(rho, abs(s-t))), y(nY-1)*(1-pow(rho, abs(s-t))));
             term3 = dnbinom(groupC(j,t)+groupC(j,s) - r - l, (trend(y, 2, s, type)+trend(y, 2, t, type))*pow(rho, abs(s-t)), y(nY-1)*pow(rho, abs(s-t)));
             term4 = dbinom(groupC(j,s)-r, groupC(j,s)+groupC(j,t)-r-l, trend(y, 2, s, type)/(trend(y, 2, s, type)+trend(y, 2, t, type)));
-            
+
             pairwiseProb += term1*term2*term3*term4;
-            
+
           }
         }
         logL += log(pairwiseProb);
@@ -427,7 +427,7 @@ double mlSecondOneGroup(double rho, NumericVector y, NumericMatrix groupC, int n
 
 // [[Rcpp::export]]
 NumericVector mlFirstGrad(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type){
-  /* y corresponds to the parameter which are to be estimated. The last entry 
+  /* y corresponds to the parameter which are to be estimated. The last entry
   corresponds to the size, while the others correspond to the individual time points.
   Further structure of y: Last entry = size. Before each entry depends on the
   chosen trend */
@@ -439,12 +439,12 @@ NumericVector mlFirstGrad(NumericVector y, NumericMatrix groupE, NumericMatrix g
   NumericVector trendG(nL);
   NumericVector lambda(nL);
   double eta;
-  
+
   for(k=0;k<nL;k++){
     lambda(k)=y(k);
   }
   eta=y(nG-1);
-  
+
   for(j=0;j<nE;j++){
     for(t=0;t<tpE(j);t++){
       trendG = trendGrad(lambda, 1, t, type);
@@ -473,18 +473,18 @@ NumericMatrix mlFirstHObs(NumericVector y, NumericMatrix groupE, NumericMatrix g
   //nG is length of gradient corresponding to number of parameters; nL is number of parameters in lambda
   nG=y.length();
   nL=nG-1;
-  
+
   NumericMatrix H(nG,nG);
   NumericMatrix trendH(nL,nL);
   NumericVector trendG(nL);
   NumericVector lambda(nL);
   double eta;
-  
+
   for(k=0;k<nL;k++){
     lambda(k)=y(k);
   }
   eta=y(nG-1);
-  
+
   for(j=0;j<nE;j++){
     for(t=0;t<tpE(j);t++){
       //Fill Hessian with DlambdaDlambda
@@ -538,19 +538,19 @@ NumericMatrix mlFirstHExp(NumericVector y, double kf, int tp, int type){
   //nG is length of gradient corresponding to number of parameters; nL is number of parameters in lambda
   nG=y.length();
   nL=nG-1;
-  
+
   NumericMatrix HE(nG,nG);
   NumericMatrix HC(nG,nG);
   NumericMatrix H(nG, nG);
   NumericVector trendG(nL);
   NumericVector lambda(nL);
   double eta;
-  
+
   for(k=0;k<nL;k++){
     lambda(k)=y(k);
   }
   eta=y(nG-1);
-  
+
   //Fill Hessian with DlambdaDlambda
   for(t=0;t<tp;t++){
     trendG = trendGrad(lambda, 1, t, type);
@@ -569,7 +569,7 @@ NumericMatrix mlFirstHExp(NumericVector y, double kf, int tp, int type){
   for(t=0;t<tp;t++){
     HE(nL, nL)+=1/eta-1/(trend(lambda, 1, t, type)+eta)+ExpTerm1(trend(lambda, 1, t, type), eta)-trigamma(eta);
   }
-  
+
   //Fill Hessian with DlambdaDlambda
   for(t=0;t<tp;t++){
     trendG = trendGrad(lambda, 2, t, type);
@@ -588,13 +588,13 @@ NumericMatrix mlFirstHExp(NumericVector y, double kf, int tp, int type){
   for(t=0;t<tp;t++){
     HC(nL, nL)+=1/eta-1/(trend(lambda, 2, t, type)+eta)+ExpTerm1(trend(lambda, 2, t, type), eta)-trigamma(eta);
   }
-  
+
   for(k=0;k<nG;k++){
     for(l=0;l<nG;l++){
       H(k,l)=-kf/(kf+1)*HE(k,l)-1/(kf+1)*HC(k,l);
     }
   }
-  
+
   return(H);
 }
 
@@ -602,21 +602,21 @@ NumericMatrix mlFirstHExp(NumericVector y, double kf, int tp, int type){
 NumericMatrix mlFirstJObs(NumericVector y, NumericMatrix groupE, NumericMatrix groupC, int nE, int nC, NumericVector tpE, NumericVector tpC, int type){
   int j,t,k,l,nG,nL;
   double divN;
-  
+
   nG=y.length();
   nL=nG-1;
-  
+
   NumericMatrix J(nG,nG);
   NumericVector Jhelp(nG);
   NumericVector trendG(nL);
   NumericVector lambda(nL);
   double eta;
-  
+
   for(k=0;k<nL;k++){
     lambda(k)=y(k);
   }
   eta=y(nG-1);
-  
+
   for(j=0;j<nE;j++){
     for(k=0;k<nG;k++){
       Jhelp(k)=0;
@@ -660,46 +660,46 @@ NumericMatrix mlFirstJObs(NumericVector y, NumericMatrix groupE, NumericMatrix g
     }
   }
   return(J);
-}  
+}
 
 // [[Rcpp::export]]
 NumericMatrix mlFirstJExp(NumericVector y, double rho, double kf, int tp, int type, int approx = 50){
   //Dieses rho entspricht lediglich dem autokorrelationskoeffizienten
   int t,s,k,l,nG,nL;
-  
+
   nG=y.length();
   nL=nG-1;
-  
+
   NumericMatrix J(nG,nG);
   NumericMatrix JE(nG, nG);
   NumericMatrix JC(nG, nG);
-  
+
   NumericVector trendGEt(nL);
   NumericVector trendGEs(nL);
   NumericVector trendGCt(nL);
   NumericVector trendGCs(nL);
-  
+
   NumericVector ExpTerm1AllE(tp);
   NumericVector ExpTerm1AllC(tp);
   NumericMatrix ExpTerm2AllE(tp, tp);
   NumericMatrix ExpTerm2AllC(tp, tp);
   NumericMatrix ExpTerm3AllE(tp, tp);
   NumericMatrix ExpTerm3AllC(tp, tp);
-  
+
   NumericVector lambda(nL);
   double eta, fEt, fEs, fCt, fCs;
-  
+
   //Calculate helpmatrices
   for(k=0;k<nL;k++){
     lambda(k)=y(k);
   }
   eta=y(nG-1);
-  
+
   for(t=0;t<tp;t++){
     ExpTerm1AllE(t) = ExpTerm1(trend(lambda, 1, t, type), eta, approx);
     ExpTerm1AllC(t) = ExpTerm1(trend(lambda, 2, t, type), eta, approx);
   }
-  
+
   for(t=0;t<tp;t++){
     for(s=0;s<tp;s++){
       ExpTerm2AllE(t, s)=ExpTerm2(trend(lambda, 1, t, type), trend(lambda, 1, s, type), eta, pow(rho, abs(s-t)), approx);
@@ -713,14 +713,14 @@ NumericMatrix mlFirstJExp(NumericVector y, double rho, double kf, int tp, int ty
       }
     }
   }
-  
+
   for(t=0;t<tp;t++){
     trendGEt = trendGrad(lambda, 1, t, type);
     trendGCt = trendGrad(lambda, 2, t, type);
     for(s=0;s<tp;s++){
       trendGEs = trendGrad(lambda, 1, s, type);
       trendGCs = trendGrad(lambda, 2, s, type);
-      fEt = trend(lambda, 1, t, type); fEs = trend(lambda, 1, s, type); 
+      fEt = trend(lambda, 1, t, type); fEs = trend(lambda, 1, s, type);
       fCt = trend(lambda, 2, t, type); fCs = trend(lambda, 2, s, type);
       //Fill J with Deta X Deta
       if(s==t){
@@ -769,7 +769,7 @@ NumericMatrix mlFirstJExp(NumericVector y, double rho, double kf, int tp, int ty
 double mlFirstBlinded(NumericVector y, NumericMatrix group, int n, NumericVector tp, int type, double theta, double k){
   //Type 1 constant trend y=(lambda_1, eta)
   //Type 2 exponential trend y=c(lambda_1,lambda_2, eta)
-  
+
   int j,t; /*j for patients; t for time points*/
 int nY;
 double logL, eta; /*log likelihood*/
@@ -798,7 +798,7 @@ return(-1/((float) n)*logL);
 
 // [[Rcpp::export]]
 double mlSecondBlinded(double rho, NumericVector y, NumericMatrix group, int n, NumericVector tp, int type, double k){
-  
+
   int j,t,s,nY,r,l; /*j for patients; s,t for time points; k,l for specific calculations*/
 double logL,term1,term2,term3,term4,pairwiseProb; /*log likelihood; term1-4 specific terms in sum*/
 
@@ -815,14 +815,14 @@ for(j=0;j<n;j++){
           term2 = dnbinom(l, trend(y, 1, t, type)*(1-pow(rho, abs(s-t))), y(nY-1)*(1-pow(rho, abs(s-t))));
           term3 = dnbinom(group(j,t)+group(j,s) - r - l, (trend(y, 1, s, type)+trend(y, 1, t, type))*pow(rho, abs(s-t)), y(nY-1)*pow(rho, abs(s-t)));
           term4 = dbinom(group(j,s)-r, group(j,s)+group(j,t)-r-l, trend(y, 1, s, type)/(trend(y, 1, s, type)+trend(y, 1, t, type)));
-          
+
           pairwiseProb += k/(1+k)*term1*term2*term3*term4;
-          
+
           term1 = dnbinom(r, trend(y, 2, s, type)*(1-pow(rho, abs(s-t))), y(nY-1)*(1-pow(rho, abs(s-t))));
           term2 = dnbinom(l, trend(y, 2, t, type)*(1-pow(rho, abs(s-t))), y(nY-1)*(1-pow(rho, abs(s-t))));
           term3 = dnbinom(group(j,t)+group(j,s) - r - l, (trend(y, 2, s, type)+trend(y, 2, t, type))*pow(rho, abs(s-t)), y(nY-1)*pow(rho, abs(s-t)));
           term4 = dbinom(group(j,s)-r, group(j,s)+group(j,t)-r-l,trend(y, 2, s, type)/(trend(y, 2, s, type)+trend(y, 2, t, type)));
-          
+
           pairwiseProb += 1/(1+k)*term1*term2*term3*term4;
         }
       }
@@ -832,5 +832,3 @@ for(j=0;j<n;j++){
 }
 return(-logL);
 }
-
-

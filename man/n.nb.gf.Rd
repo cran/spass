@@ -7,8 +7,20 @@
 \code{n.nb.gf} uses code contributed by Thomas Asendorf.
 }
 \usage{
-n.nb.gf(alpha = 0.025, power = 0.8, lambda, size, rho, tp, k = 1, h,
-  hgrad, h0, trend = c("constant", "exponential", "custom"), approx = 20)
+n.nb.gf(
+  alpha = 0.025,
+  power = 0.8,
+  lambda,
+  size,
+  rho,
+  tp,
+  k = 1,
+  h,
+  hgrad,
+  h0,
+  trend = c("constant", "exponential", "custom"),
+  approx = 20
+)
 }
 \arguments{
 \item{alpha}{level (type I error) to which the hypothesis is tested.}
@@ -39,7 +51,7 @@ n.nb.gf(alpha = 0.025, power = 0.8, lambda, size, rho, tp, k = 1, h,
 \code{n.nb.gf} returns the required sample size within the control group and treatment group.
 }
 \description{
-\code{n.nb.inar1} calculates required sample sizes for testing trend parameters in a Gamma frailty model
+\code{n.nb.gf} calculates required sample sizes for testing trend parameters in a Gamma frailty model
 }
 \details{
 The function calculates required samples sizes for testing trend parameters of trends in longitudinal negative binomial data. The underlying
@@ -55,7 +67,7 @@ to be approximated numerically. The value \code{approx} defines how close the ap
 High values of \code{approx} provide better approximations but are compuationally more expensive.
 }
 \examples{
-##The example is commented as it may take longer than 10 seconds to run. 
+##The example is commented as it may take longer than 10 seconds to run.
 ##Please uncomment prior to execution.
 
 ##Example for constant rates
@@ -67,10 +79,10 @@ High values of \code{approx} provide better approximations but are compuationall
 #}
 
 ##We assume the rate in the control group to be exp(lambda[1]) = exp(0) and an
-##effect of lambda[2] = -0.3. The \\code{size} is assumed to be 1 and the correlation
-##coefficient \\code{\\rho} 0.5. At the end of the study, we would like to test
+##effect of lambda[2] = -0.3. The \code{size} is assumed to be 1 and the correlation
+##coefficient \code{\rho} 0.5. At the end of the study, we would like to test
 ##the treatment effect specified in lambda[2], and therefore define function
-##\\code{h} and value \\code{h0} accordingly.
+##\code{h} and value \code{h0} accordingly.
 
 #estimate<-n.nb.gf(lambda=c(0,-0.3), size=1, rho=1, tp=6, k=1, h=h, hgrad=hgrad,
 #   h0=0.2, trend="constant", approx=20)

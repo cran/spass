@@ -7,9 +7,15 @@
 \code{estimcov} uses code contributed by Roland Gerard Gera.
 }
 \usage{
-estimcov(data, Time, Startvalues = c(3, 0.5, 1), stepwidth = c(0.001, 0.001,
-  0.001), maxiter = 10000, lower = c(1e-04, 1e-04, 1e-04), upper = c(Inf,
-  5, 3))
+estimcov(
+  data,
+  Time,
+  Startvalues = c(3, 0.5, 1),
+  stepwidth = c(0.001, 0.001, 0.001),
+  maxiter = 10000,
+  lower = c(1e-04, 1e-04, 1e-04),
+  upper = c(Inf, 5, 3)
+)
 }
 \arguments{
 \item{data}{matrix with the dataset which is used to estimate the covariance and dropout structure.}

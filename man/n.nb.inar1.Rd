@@ -7,8 +7,18 @@
 \code{rnbinom.inar1} uses code contributed by Thomas Asendorf.
 }
 \usage{
-n.nb.inar1(alpha, power = NULL, delta, muC, size, rho, tp, k, npow = NULL,
-  nmax = Inf)
+n.nb.inar1(
+  alpha,
+  power = NULL,
+  delta,
+  muC,
+  size,
+  rho,
+  tp,
+  k,
+  npow = NULL,
+  nmax = Inf
+)
 }
 \arguments{
 \item{alpha}{level (type I error) to which the hypothesis is tested.}

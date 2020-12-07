@@ -7,8 +7,17 @@
 \code{bssr.nb.gf} uses code contributed by Thomas Asendorf.
 }
 \usage{
-bssr.nb.gf(data, alpha = 0.025, power = 0.8, delta, h0 = 0, tp, k,
-  trend = c("constant", "exponential", "custom"), approx = 20)
+bssr.nb.gf(
+  data,
+  alpha = 0.025,
+  power = 0.8,
+  delta,
+  h0 = 0,
+  tp,
+  k,
+  trend = c("constant", "exponential", "custom"),
+  approx = 20
+)
 }
 \arguments{
 \item{data}{a matrix or data frame containing count data which is to be fitted. Columns correspond to time points, rows to observations.}
@@ -52,7 +61,7 @@ For sample sizes \eqn{n_C} and \eqn{n_T} of the control and treatment group, res
 sample size allocation factor at the end of the study, i.e. \eqn{k = n_T/n_C}.
 }
 \examples{
-##The example is commented as it may take longer than 10 seconds to run. 
+##The example is commented as it may take longer than 10 seconds to run.
 ##Please uncomment prior to execution.
 
 ##Example for constant rates

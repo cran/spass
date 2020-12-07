@@ -7,9 +7,18 @@
 \code{n.1subgroup} uses code contributed by Marius Placzek.
 }
 \usage{
-n.1subgroup(alpha, beta, delta, sigma, tau, eps = 0.001,
-  approx = c("conservative.t", "liberal.t", "normal"), k = 1, nmax = 1000,
-  nmin = 0)
+n.1subgroup(
+  alpha,
+  beta,
+  delta,
+  sigma,
+  tau,
+  eps = 0.001,
+  approx = c("conservative.t", "liberal.t", "normal"),
+  k = 1,
+  nmax = 1000,
+  nmin = 0
+)
 }
 \arguments{
 \item{alpha}{level (type I error) to which the hypothesis is tested.}

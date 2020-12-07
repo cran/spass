@@ -7,8 +7,14 @@
 \code{sandwich} computes the asymptotic sandwich covariance estimator and uses code contributed by Roland Gerard Gera.
 }
 \usage{
-sandwich(yCov, D, V, correctionmatrix, missing = rep(0, dim(yCov)[[2]]),
-  missingtype = c("none", "monotone", "intermittened"))
+sandwich(
+  yCov,
+  D,
+  V,
+  correctionmatrix,
+  missing = rep(0, dim(yCov)[[2]]),
+  missingtype = c("none", "monotone", "intermittened")
+)
 }
 \arguments{
 \item{yCov}{\eqn{yCov} matrix containing either an estimation for the covariance between timepoints or an empirical covariance matrix itsel. see 'Details'.}
@@ -36,7 +42,7 @@ sandwich(yCov, D, V, correctionmatrix, missing = rep(0, dim(yCov)[[2]]),
 }
 \examples{
 #Let's assume we wish to calculate the robust variance estimator for  equation
-#\\eqn{y_{it}=\\beta_0+\\beta_1*I_{treat}+\\beta_2*t+\\beta_3*I _{treat}*t+\\epsilon_{it}}.
+#\eqn{y_{it}=\beta_0+\beta_1*I_{treat}+\beta_2*t+\beta_3*I _{treat}*t+\epsilon_{it}}.
 #Furthermore we use the identitiy matrix as the working covariance matrix.
 #The chance to get treatment is 60 percent and the observed timerange ranges from 0:5.
 

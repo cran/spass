@@ -7,8 +7,17 @@
 \code{test.nb.gf} uses code contributed by Thomas Asendorf.
 }
 \usage{
-test.nb.gf(dataC, dataE, h, hgrad, h0 = 0, trend = c("constant",
-  "exponential", "custom"), H0 = FALSE, one.sided = TRUE, ...)
+test.nb.gf(
+  dataC,
+  dataE,
+  h,
+  hgrad,
+  h0 = 0,
+  trend = c("constant", "exponential", "custom"),
+  H0 = FALSE,
+  one.sided = TRUE,
+  ...
+)
 }
 \arguments{
 \item{dataC}{a matrix or data frame containing count data from the control group. Columns correspond to time points, rows to observations.}

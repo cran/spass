@@ -7,13 +7,31 @@
 \code{sim.bssr.gee.1subgroup} uses code contributed by Roland Gerard Gera.
 }
 \usage{
-sim.bssr.gee.1subgroup(nsim = 1000, alpha = 0.05, tail = "both",
-  beta = 0.2, delta = c(0.1, 0.1), vdelta = c(0.1, 0.1),
-  sigma_pop = c(3, 3), vsigma_pop = c(3, 3), tau = 0.5, rho = 0.25,
-  vrho = 0.25, theta = 1, vtheta = 1, Time = 0:5, rec.at = 0.5,
-  k = 1, model = 1, V = diag(rep(1, length(Time))), OD = 0,
-  vdropout = rep(0, length(Time)), missingtype = "none",
-  vmissingtype = "none", seed = 2015)
+sim.bssr.gee.1subgroup(
+  nsim = 1000,
+  alpha = 0.05,
+  tail = "both",
+  beta = 0.2,
+  delta = c(0.1, 0.1),
+  vdelta = c(0.1, 0.1),
+  sigma_pop = c(3, 3),
+  vsigma_pop = c(3, 3),
+  tau = 0.5,
+  rho = 0.25,
+  vrho = 0.25,
+  theta = 1,
+  vtheta = 1,
+  Time = 0:5,
+  rec.at = 0.5,
+  k = 1,
+  model = 1,
+  V = diag(rep(1, length(Time))),
+  OD = 0,
+  vdropout = rep(0, length(Time)),
+  missingtype = "none",
+  vmissingtype = "none",
+  seed = 2015
+)
 }
 \arguments{
 \item{nsim}{number of simulation runs.}

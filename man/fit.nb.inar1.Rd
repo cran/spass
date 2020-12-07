@@ -7,8 +7,13 @@
 \code{fit.nb.inar1} uses code contributed by Thomas Asendorf.
 }
 \usage{
-fit.nb.inar1(x, lower = rep(10, 3)^-5, upper = c(10^5, 10^5, 1 - 10^-5),
-  method = "L-BFGS-B", start)
+fit.nb.inar1(
+  x,
+  lower = rep(10, 3)^-5,
+  upper = c(10^5, 10^5, 1 - 10^-5),
+  method = "L-BFGS-B",
+  start
+)
 }
 \arguments{
 \item{x}{a matrix or data frame containing count data which is to be fitted. Columns correspond to time points, rows to observations.}
